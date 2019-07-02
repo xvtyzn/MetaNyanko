@@ -1,0 +1,10 @@
+qsub bbduk.sh
+qsub bbmerge.sh
+qsub megahit.sh
+qsub bbmap.sh
+qsub maxbin.sh
+qsub metabat2.sh
+qsub metaphlan2.sh
+qsub checkm.sh
+qsub dfast.sh
+echo $PWD

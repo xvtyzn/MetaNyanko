@@ -1,0 +1,7 @@
+sample-id,absolute-path,direction,description
+NyanNyan,/Users/ide/Documents/MetaNyanko/Nyanko_R1.fastq,forward,sample
+NyanNyan,/Users/ide/Documents/MetaNyanko/Nyanko_R2.fastq,reverse,sample
+NyanNyan2,/Users/ide/Documents/MetaNyanko/Nyanko_R1.fastq,forward,sample
+NyanNyan2,/Users/ide/Documents/MetaNyanko/Nyanko_R2.fastq,reverse,sample
+NyanNyan3,/Users/ide/Documents/MetaNyanko/Nyanko_R1.fastq,forward,sample
+NyanNyan3,/Users/ide/Documents/MetaNyanko/Nyanko_R2.fastq,reverse,sample
