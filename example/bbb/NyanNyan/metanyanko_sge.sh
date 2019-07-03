@@ -1,9 +1,9 @@
-qsub bbduk.sh -hold_jid
-qsub bbmerge.sh -hold_jid
-qsub megahit.sh -hold_jid
-qsub bbmap.sh -hold_jid
-qsub maxbin.sh -hold_jid
-qsub metabat2.sh -hold_jid
-qsub metaphlan2.sh -hold_jid
-qsub checkm.sh -hold_jid
-echo $PWD -hold_jid
+qsub bbduk.sh -N qc_NyanNyan
+qsub bbmerge.sh -hold_jid qc_NyanNyan -N merge_NyanNyan
+qsub megahit.sh -hold_jid qc_NyanNyan -N assembly_NyanNyan
+qsub bbmap.sh -hold_jid assembly_NyanNyan -N mapping_NyanNyan
+qsub maxbin.sh -hold_jid mapping_NyanNyan -N binning_NyanNyan
+qsub metabat2.sh -hold_jid mapping_NyanNyan -N binning_NyanNyan
+qsub metaphlan2.sh -hold_jid merge_NyanNyan -N metaphlan2_NyanNyan
+qsub checkm.sh -hold_jid binning_NyanNyan -N binning_NyanNyan
+echo $PWD
