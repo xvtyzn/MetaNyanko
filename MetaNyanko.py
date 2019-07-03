@@ -129,8 +129,7 @@ def main():
 # qsub
 #################
    for sample in out2:
-      command_cd = ["cd", sample]
-      subprocess.run(command_cd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) #移動
+      os.chdir(sample)
       metanyanko_sge = os.path.join(sample, "metanyanko_sge.sh")
       command = ["sh", metanyanko_sge]
       res = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
