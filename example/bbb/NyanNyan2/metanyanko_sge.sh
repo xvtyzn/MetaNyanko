@@ -1,0 +1,9 @@
+qsub bbduk.sh -hold_jid -hold_jid -hold_jid
+qsub bbmerge.sh -hold_jid -hold_jid -hold_jid
+qsub megahit.sh -hold_jid -hold_jid -hold_jid
+qsub bbmap.sh -hold_jid -hold_jid -hold_jid
+qsub maxbin.sh -hold_jid -hold_jid -hold_jid
+qsub metabat2.sh -hold_jid -hold_jid -hold_jid
+qsub metaphlan2.sh -hold_jid -hold_jid -hold_jid
+qsub checkm.sh -hold_jid -hold_jid -hold_jid
+echo $PWD -hold_jid -hold_jid -hold_jid

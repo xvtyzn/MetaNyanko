@@ -1,12 +1,13 @@
+programs_list = ["bbduk", "bbmap", "megahit", "metaphlan2", "checkm", "metabat2", "maxbin"]
+
 program_dict = {
-"bbduk": ["bbduk.sh", "in1=reads.fq" "in2=reads.fq" "out1=clean.fq" "in2=reads.fq" "qtrim=r" "trimq=10" "minlen=100"],
-"bbmerge": [],
-"bbmap": ["bbmap.sh", "in=reads.fq", "out=clean.fq", "qtrim=r", "trimq=10", "minlen=100"],
-"megahit": ["megahit", "-o", "output", "-t", "60", "-1", "_clean.fq", "-2", "_clean.fq"],
-"metaphlan2": ["metaphlan2.py", "_merged.fq", "-o", "all.txt", "--input_type", "fastq", "--nproc 60"],
+"bbduk": ["bbduk.sh", "in1=A.fq", "in2=B.fq", "out1=qc/clean1.fq", "out2=qc/clean2.fq", "qtrim=r", "trimq=10", "minlen=100"],
+"bbmerge": ["bbmerge.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=qc/merged.fq", "outu1=qc/unmerged1.fq", "outu2=qc/unmerged2.fq"],
+"megahit": ["megahit", "-o", "megahit", "-t", "60", "-1", "qc/clean1.fq", "-2", "qc/clean2.fq"],
+"bbmap": ["bbmap.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=mapping/mapped.sam", "ref=megahit/final.contigs.fa", "covstats=sample.stats"],
+"metaphlan2": ["metaphlan2.py", "qc/merged.fq", "-o", "metaphlan2/all.txt", "--input_type", "fastq", "--nproc 60"],
 "checkm": ["checkm", "lineage_wf", "-t", "30", "-x", "fasta", "output/", "checkm_output"],
-"dfast": [""],
-"metabat2": [""],
-"bowtie2": [""],
-"maxbin": ["run_MaxBin.pl", "-contig", "final.contigs.fa", "-abund", "myabund", "-out", "output", "-thread 30"]
+"metabat2": ["runMetaBat.sh", "assembly.fasta", "sample1.bam"],
+"maxbin": ["cut", "-f", "1,2", "mapping/sample.stats", ">", "maxbin/myabund", "\n",
+            "run_MaxBin.pl", "-contig", "megahit/final.contigs.fa", "-abund", "maxbin/myabund", "-out", "maxbin", "-thread 60"]
 }
