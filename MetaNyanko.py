@@ -75,9 +75,9 @@ def main():
 
    programs_list = programs.programs_list  #scripts/progtrams.py
 
-   threads_option = "# -pe smp " + str(args.thread)
-   memory_option = "# -l s_vmem=" + str(args.memory) +  "G -l mem_req=" + str(args.memory) + "G"
-   UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "# -cwd", memory_option, threads_option]
+   threads_option = "#$ -pe smp " + str(args.thread)
+   memory_option = "#$ -l s_vmem=" + str(args.memory) +  "G -l mem_req=" + str(args.memory) + "G"
+   UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
    for program in programs_list:
       for sample in out2:
