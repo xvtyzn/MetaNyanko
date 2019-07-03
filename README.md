@@ -14,6 +14,12 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 ### python package dependency
 このパイプラインは以下のソフトウェアに依存しています。
 
+1. sys
+2. os
+3. pandas
+4. argparse
+5. subprocess
+
 ### Software dependency
 1. BBtools
 2. megahit

@@ -7,12 +7,12 @@ program_dict = {
             "outu1=qc/unmerged1.fq", "outu2=qc/unmerged2.fq"],
 "megahit": ["megahit", "-o", "megahit", "-t", "10", "-1", "qc/clean1.fq", "-2", "qc/clean2.fq"],
 "bbmap": ["bbmap.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=mapping/mapped.sam",
-            "ref=megahit/final.contigs.fa", "covstats=mapping/sample.stats",
+            "ref=megahit/final.contigs.fa", "covstats=mapping/sample.stats\n",
             "samtools", "sort", "-@", "4", "mapping/mapped.sam", ">", "mapping/mapped.sort.bam"],
 "metaphlan2": ["metaphlan2.py", "qc/merged.fq", "-o", "metaphlan2/all.txt", "--input_type",
             "fastq", "--nproc 10"],
 "checkm": ["checkm", "lineage_wf", "-t", "30", "-x", "fasta", "output/", "checkm_output"],
-"metabat2": ["runMetaBat.sh", "megahit/final.contigs.fa", "mapping/mapped.sort.bam", "-o", "metabat2/metabat2"],
+"metabat2": ["runMetaBat.sh", "megahit/final.contigs.fa", "mapping/mapped.sort.bam"],
 "maxbin": ["cut", "-f", "1,2", "mapping/sample.stats", ">", "maxbin/myabund",
-            "\nrun_MaxBin.pl", "-contig", "megahit/final.contigs.fa", "-abund", "maxbin/myabund", "-out", "maxbin", "-thread 10"]
+            "\nrun_MaxBin.pl", "-contig", "megahit/final.contigs.fa", "-abund", "maxbin/myabund", "-out", "maxbin/maxbin", "-thread 10"]
 }
