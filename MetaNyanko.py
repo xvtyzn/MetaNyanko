@@ -121,7 +121,7 @@ def main():
             str_qsub = " ".join(qsub)
             str_qsub2 = str_qsub.replace('defaultsample', samplename)
 #            str_qsub3 = str_qsub2.replace('shellpath', sample)
-            str_qsub3 = str_qsub2.replace('shellpath', "")
+            str_qsub3 = str_qsub2.replace('shellpath/', "")
             print(str_qsub3)
             f.write(str_qsub3)
             f.write("\n")
@@ -130,12 +130,14 @@ def main():
 # qsub
 #################
    for sample in out2:
+      pwd_dir = os.getcwd()
       os.chdir(sample)
 #      metanyanko_sge = os.path.join(sample, "metanyanko_sge.sh")
       metanyanko_sge = "metanyanko_sge.sh"
       command = ["sh", metanyanko_sge]
       res = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
       sys.stdout.buffer.write(res.stdout)
+      os.chdir(pwd_dir)
 
 
 if __name__ == '__main__':
