@@ -1,5 +1,3 @@
-qsub_list = [qc, merge, assembly, mapping, maxbin, metabat2, metaphlan2, checkm, test]
-
 qc = ["qsub", "-N", "qc_defaultsample", "shellpath/bbduk.sh"]
 merge = ["qsub", "-hold_jid", "qc_defaultsample", "-N", "merge_defaultsample", "shellpath/bbmerge.sh"]
 assembly = ["qsub", "-hold_jid", "qc_defaultsample", "-N", "assembly_defaultsample", "shellpath/megahit.sh"]
@@ -9,3 +7,5 @@ metabat2 = ["qsub", "-hold_jid", "mapping_defaultsample", "-N", "binning_default
 metaphlan2 = ["qsub", "-hold_jid", "merge_defaultsample", "-N", "metaphlan2_defaultsample", "shellpath/metaphlan2.sh"]
 checkm = ["qsub", "-hold_jid", "binning_defaultsample", "-N", "checkm_defaultsample", "shellpath/checkm.sh"]
 test = ["echo", "$PWD"]
+
+qsub_list = [qc, merge, assembly, mapping, maxbin, metabat2, metaphlan2, checkm, test]
