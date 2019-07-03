@@ -84,8 +84,10 @@ def main():
          file_path = os.path.join(sample, program + '.sh')
          samplename = os.path.basename(sample)
 
-         elog_option = "#$ -e " + sample + "/log/"
-         slog_option = "#$ -o " + sample + "/log/"
+#         elog_option = "#$ -e " + sample + "/log/"
+#         slog_option = "#$ -o " + sample + "/log/"
+         elog_option = "#$ -e log/"
+         slog_option = "#$ -o log/"
 
          job_name = [program, samplename]
          run_commnad = programs.program_dict[program] #scripts/progtrams.py
