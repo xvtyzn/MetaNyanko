@@ -2,7 +2,7 @@
 #$ -S /bin/sh
 # -cwd
 # -l s_vmem=8G -l mem_req=8G
-# -pe smp 10
+# -pe smp 60
 # -N maxbin_NyanNyan3
 source ~/.bash_profile
 cut -f 1,2 mapping/sample.stats > maxbin/myabund 

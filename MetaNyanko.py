@@ -90,7 +90,6 @@ def main():
          if program == "bbduk":
             sample_mat = input_data[input_data['sample-id'] == samplename]
             sample_mat = sample_mat['absolute-path'].values.tolist()
-            print(sample_mat)
             run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])
             run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])
          with open(file_path, 'w') as f:
@@ -114,11 +113,10 @@ def main():
       with open(metanyanko_sge, 'w') as f:
          for qsub in qsub_list:
             str_qsub = " ".join(qsub)
-            print(str_qsub)
-            print(samplename)
             str_qsub2 = str_qsub.replace('defaultsample', samplename)
-            print(str_qsub2)
-            f.write(str_qsub2)
+            str_qsub3 = str_qsub2.replace('shellpath', sample)
+            print(str_qsub3)
+            f.write(str_qsub3)
             f.write("\n")
 
 #################
