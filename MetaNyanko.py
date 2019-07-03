@@ -95,7 +95,7 @@ def main():
          with open(file_path, 'w') as f:
             f.write("\n".join(UGE_options))
             f.write("\n")
-            f.write("# -N " + "_".join(job_name))
+            #f.write("# -N " + "_".join(job_name))
             f.write("\n")
             f.write("source ~/.bash_profile")
             f.write("\n")
