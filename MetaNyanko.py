@@ -59,8 +59,8 @@ def main():
 
    #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'
 
-   dir_list = ["rawdata", "qc", "log", "megahit", "metabat2", "mapping",
-            "metaphlan2", "checkm", "dfast"]
+   dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
+            "metaphlan2", "checkm", "dfast"] #megahitは出力時に作成するため意図的に除いています
 
    out2 =  list(map(lambda x: os.path.join(output_root,x), out_dir))
 
