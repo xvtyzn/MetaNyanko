@@ -83,11 +83,11 @@ def main():
    merge = ["qsub", "-hold_jid", "","bbmerge.sh"]
    assembly = ["qsub", "-hold_jid", "","megahit.sh"]
    mapping = ["qsub", "-hold_jid", "", "bbmap.sh"]
-   maxbin = ["qsub", "maxbin.sh"]
-   metabat2 = ["qsub", "metabat2.sh"]
-   metaphlan2 = ["qsub", "metaphlan2.sh"]
-   checkm = ["qsub", "checkm.sh"]
-   dfast = ["qsub", "dfast.sh"]
+   maxbin = ["qsub",  "-hold_jid", "","maxbin.sh"]
+   metabat2 = ["qsub",  "-hold_jid", "","metabat2.sh"]
+   metaphlan2 = ["qsub", "-hold_jid", "", "metaphlan2.sh"]
+   checkm = ["qsub",  "-hold_jid", "","checkm.sh"]
+   dfast = ["qsub",  "-hold_jid", "","dfast.sh"]
    test = ["echo", "$PWD"]
 
    qsub_list = [qc, merge, assembly, mapping, maxbin, metabat2, metaphlan2, checkm,
