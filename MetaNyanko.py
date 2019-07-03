@@ -82,8 +82,11 @@ def main():
    for program in programs_list:
       for sample in out2:
          file_path = os.path.join(sample, program + '.sh')
-#         run_commnad = "\n".join(programs.program_dict[program])
          samplename = os.path.basename(sample)
+
+         elog_option = "#$ -e " + sample + "/log/"
+         slog_option = "#$ -o " + sample + "/log/"
+
          job_name = [program, samplename]
          run_commnad = programs.program_dict[program] #scripts/progtrams.py
          run_commnad_str = " ".join(run_commnad)
@@ -95,6 +98,9 @@ def main():
          with open(file_path, 'w') as f:
             f.write("\n".join(UGE_options))
             f.write("\n")
+            f.write(elog_option)
+            f.write("\n")
+            f.write(slog_option)
             #f.write("# -N " + "_".join(job_name))
             f.write("\n")
             f.write("source ~/.bash_profile")
