@@ -40,6 +40,23 @@ def command_str(prolist, input_sample, threads, sample_dataset):
 
    return prostr
 """
+
+#################
+# qsub 実行のための関数
+#################
+# directory_list: 各directoryの情報が入ったリスト
+
+def qsub_run(directory_list):
+   for sample in directory_list:
+      pwd_dir = os.getcwd()
+      os.chdir(sample)
+      command = ["sh", "metanyanko_sge.sh"]
+      res = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      sys.stdout.buffer.write(res.stdout)
+      os.chdir(pwd_dir)
+   return None
+
+
 #################
 # Output directoryの作成
 #################
@@ -60,7 +77,7 @@ def main():
    #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'
 
    dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
-            "metaphlan2", "checkm", "dfast"] #megahitは出力時に作成するため意図的に除いています
+            "metaphlan2", "checkm", "dfast", "maxbin"] #megahitは出力時に作成するため意図的に除いています
 
    out2 =  list(map(lambda x: os.path.join(output_root,x), out_dir))
 
@@ -127,20 +144,7 @@ def main():
             print(str_qsub3)
             f.write(str_qsub3)
             f.write("\n")
-
-#################
-# qsub
-#################
-   for sample in out2:
-      pwd_dir = os.getcwd()
-      os.chdir(sample)
-#      metanyanko_sge = os.path.join(sample, "metanyanko_sge.sh")
-      metanyanko_sge = "metanyanko_sge.sh"
-      command = ["sh", metanyanko_sge]
-      res = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-      sys.stdout.buffer.write(res.stdout)
-      os.chdir(pwd_dir)
-
+   qsub_run(out2) #qsubのスクリプト実行
 
 if __name__ == '__main__':
     main()
