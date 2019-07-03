@@ -1,4 +1,4 @@
-programs_list = ["bbduk", "bbmap", "megahit", "metaphlan2", "checkm", "metabat2", "maxbin"]
+programs_list = ["bbduk", "bbmap", "bbmerge", "megahit", "metaphlan2", "checkm", "metabat2", "maxbin"]
 
 program_dict = {
 "bbduk": ["bbduk.sh", "in1=A.fq", "in2=B.fq", "out1=qc/clean1.fq", "out2=qc/clean2.fq",
