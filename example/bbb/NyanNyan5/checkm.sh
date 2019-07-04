@@ -2,8 +2,9 @@
 #$ -S /bin/sh
 #$ -cwd
 #$ -l s_vmem=8G -l mem_req=8G
-#$ -pe smp 10
+#$ -pe def_slot 10
 #$ -e log/
 #$ -o log/
 source ~/.bash_profile
-checkm lineage_wf -t 30 -x fasta output/ checkm_output
+source activate metanyanko
+ checkm lineage_wf -t 30 -x fa metabat2/ checkm

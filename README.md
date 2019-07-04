@@ -32,7 +32,7 @@ checkmとmetaphlan2についてはpython2.7依存のため、仮想環境を構�
 もし仮想環境を構築しないのであれば`scripts/programs.py`から`conda activate metanyanko`を消去してください。
 
 ## Usage
-
+### Input
 ```
 [MetaNyanko]python MetaNyanko.py -h                                                                                    11:06:03  ☁ master ☂⚡✭
 usage: MetaNyanko.py -i input_table.tsv -o output_directory
@@ -75,6 +75,21 @@ inputフォーマットはqiime2のinput形式と同様です。以下の形式�
 そのため、各ソフトウェアのthreadsおよびmemoryは`scripts/programs.py`で調整を行ってください。
 
 jobの実行に関しては`scripts/shell_qsub.py`の内容に従っています。job実行の順番等の調節を行う場合には、内容の変更をしてください。
+
+### Output
+Outputは/指定したディレクトリ/sample-id下に出力されます。
+
+|ディレクトリ名|内容|
+|:--:|:---:|
+|rawdata|sample|
+|qc|BBdukによるqc結果|
+|megahit|megahitによるassembly結果|
+|mapping|BBmapによるmapping結果|
+|maxbin|maxbinののbinning結果|
+|metabat2|metabat2のbinning結果|
+|metaphlan2|metaphlan2の結果 (all.txt)|
+|checkm|checkmの経過ファイル|
+|log|各jobスクリプトのlogを出力|
 
 ## Install
 

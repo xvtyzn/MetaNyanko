@@ -19,6 +19,7 @@ parser.add_argument("-o", "--output", help="output directory path")
 parser.add_argument('-v', '--version',default="v0.0",type=str,help="show this software verstion")
 parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts (default = 1)", type=int)
 parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
+parser.add_argument("-ct" ,"--clustertype", default="UGE",help="supercomputer type (UGE or SGE)", choices = ["UGE", "SGE"])
 parser.add_argument("-j" ,"--justcreate", default=0,help="(default = 0)", type=int)
 
 args = parser.parse_args()
@@ -77,11 +78,16 @@ def make_outputdir(output_dir, input_table, dir_list):
 # qsub用のスクリプトの作成
 #################
 
-def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, data_table):
+def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, data_table, st):
    plist = programs_list  #scripts/progtrams.py
 
    memory_str = str(memory)
-   threads_option = "#$ -pe smp " + str(threads)
+
+   if st == "UGE":
+      threads_option = "#$ -pe def_slot " + str(threads)
+   elif st == "SGE":
+      threads_option = "#$ -pe smp " + str(threads)
+
    memory_option = "#$ -l s_vmem=" + memory_str  +  "G -l mem_req=" + memory_str  + "G"
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
@@ -147,7 +153,7 @@ def main():
    sampledata_table = out1[1]
 
    make_jobscripts(programs.programs_list, programs.program_dict, args.thread,
-                  args.memory, output_path, sampledata_table)
+                  args.memory, output_path, sampledata_table, args.clustertype)
    make_shellscripts(sqsub.qsub_list, output_path)
 
    if args.justcreate == 0:
