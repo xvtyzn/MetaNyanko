@@ -6,7 +6,7 @@ program_dict = {
 "bbmerge": ["bbmerge.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=qc/merged.fq",
             "outu1=qc/unmerged1.fq", "outu2=qc/unmerged2.fq"],
 "megahit": ["megahit", "-o", "megahit", "-t", "10", "-1", "qc/clean1.fq", "-2", "qc/clean2.fq"],
-"bbmap": ["bbmap.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=mapping/mapped.sam", "threads=10"
+"bbmap": ["bbmap.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=mapping/mapped.sam", "threads=10",
             "ref=megahit/final.contigs.fa", "covstats=mapping/sample.stats\n",
             "samtools", "sort", "-@", "10", "mapping/mapped.sam", ">", "mapping/mapped.sort.bam"],
 "checkm": ["source", "activate", "metanyanko\n",
