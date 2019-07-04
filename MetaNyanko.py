@@ -20,7 +20,7 @@ parser.add_argument('-v', '--version',default="v0.0",type=str,help="show this so
 parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts (default = 1)", type=int)
 parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
 parser.add_argument("-ct" ,"--clustertype", default="UGE",help="supercomputer type (UGE or SGE)", choices = ["UGE", "SGE"])
-parser.add_argument("-j" ,"--justcreate", default=0,help="(default = 0)", type=int)
+parser.add_argument("-j" ,"--justcreate", default=0, help="(default = 0)", choices = [0, 1], type=int)
 
 args = parser.parse_args()
 
@@ -65,14 +65,14 @@ def make_outputdir(output_dir, input_table, dir_list):
 
    #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'
 
-   out2 =  list(map(lambda x: os.path.join(output_root,x), out_dir))
+   abpath_out =  list(map(lambda x: os.path.join(output_root,x), out_dir))
 
-   for out in out2 :
+   for out in abpath_out  :
       os.mkdir(out)
       for folder in dir_list:
          os.mkdir(os.path.join(out, folder))
 
-   return out2, input_data
+   return abpath_out, input_data
 
 #################
 # qsub用のスクリプトの作成
@@ -82,11 +82,12 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
    plist = programs_list  #scripts/progtrams.py
 
    memory_str = str(memory)
+   threads_str = str(threads)
 
    if st == "UGE":
-      threads_option = "#$ -pe def_slot " + str(threads)
+      threads_option = "#$ -pe def_slot " + threads_str
    elif st == "SGE":
-      threads_option = "#$ -pe smp " + str(threads)
+      threads_option = "#$ -pe smp " + threads_str
 
    memory_option = "#$ -l s_vmem=" + memory_str  +  "G -l mem_req=" + memory_str  + "G"
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
@@ -158,7 +159,7 @@ def main():
 
    if args.justcreate == 0:
       qsub_run(output_path) #qsubのスクリプト実行
-   else:
+   elif args.justcreate == 1:
       pass
 
 if __name__ == '__main__':
