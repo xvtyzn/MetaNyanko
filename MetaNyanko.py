@@ -44,6 +44,10 @@ def qsub_run(sample_list):
 #################
 # Output directoryの作成
 #################
+# output_dir: outputで指定したdirectory
+# input_table: inputで指定したcsvのpath
+# dir_list: output directory下に作成するdirectoryリスト
+# 出力: output_dirに各directoryを付与したpath, input_tableのpandas object
 
 def make_outputdir(output_dir, input_table, dir_list):
    output_root = output_dir
@@ -60,9 +64,6 @@ def make_outputdir(output_dir, input_table, dir_list):
 
    #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'
 
-   dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
-               "metaphlan2", "checkm", "dfast", "maxbin"] #megahitは出力時に作成するため意図的に除いています
-
    out2 =  list(map(lambda x: os.path.join(output_root,x), out_dir))
 
    for out in out2 :
@@ -76,12 +77,12 @@ def make_outputdir(output_dir, input_table, dir_list):
 # qsub用のスクリプトの作成
 #################
 
-def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list,
-                     data_table):
+def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, data_table):
    plist = programs_list  #scripts/progtrams.py
 
+   memory_str = str(memory)
    threads_option = "#$ -pe smp " + str(threads)
-   memory_option = "#$ -l s_vmem=" + str(memory) +  "G -l mem_req=" + str(memory) + "G"
+   memory_option = "#$ -l s_vmem=" + memory_str  +  "G -l mem_req=" + memory_str  + "G"
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
    for program in plist:
@@ -95,18 +96,25 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list,
          job_name = [program, samplename]
          run_commnad = programs_dict[program] #scripts/progtrams.py
          run_commnad_str = " ".join(run_commnad)
+
          if program == "bbduk":
             sample_mat = data_table[data_table['sample-id'] == samplename]
             sample_mat = sample_mat['absolute-path'].values.tolist()
-            run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])
-            run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])
-            
-            program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" +
-                        slog_option + "\n" + "source ~/.bash_profile" + "\n" +
+
+            run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])  #R1デフォルトがA.fq
+            run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])  #R2デフォルトがB.fq
+
+            program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" + \
+                        slog_option + "\n" + "source ~/.bash_profile" + "\n" + \
+                        run_commnad_str
+         else:
+            program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" + \
+                        slog_option + "\n" + "source ~/.bash_profile" + "\n" + \
                         run_commnad_str
 
          with open(file_path, 'w') as f:
             f.write(program_all)
+
    return None
 
 #################
@@ -130,17 +138,18 @@ def make_shellscripts(run_list, dir_list):
    return None
 
 def main():
+   #megahitは出力時に作成するため意図的に除いています
    dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
-               "metaphlan2", "checkm", "dfast", "maxbin"] #megahitは出力時に作成するため意図的に除いています
+               "metaphlan2", "checkm", "dfast", "maxbin"]
 
    out1 = make_outputdir(args.output, args.input, dir_list)
-   out2 = out1[0]
-   input_data = out1[1]
+   output_path = out1[0]
+   sampledata_table = out1[1]
 
    make_jobscripts(programs.programs_list, programs.program_dict, args.thread,
-                  args.memory, out2, input_data)
-   make_shellscripts(sqsub.qsub_list, out2)
-   qsub_run(out2) #qsubのスクリプト実行
+                  args.memory, output_path, sampledata_table)
+   make_shellscripts(sqsub.qsub_list, output_path)
+   qsub_run(output_path) #qsubのスクリプト実行
 
 if __name__ == '__main__':
     main()
