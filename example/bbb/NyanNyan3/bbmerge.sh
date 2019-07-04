@@ -2,7 +2,7 @@
 #$ -S /bin/sh
 #$ -cwd
 #$ -l s_vmem=8G -l mem_req=8G
-#$ -pe smp 0
+#$ -pe smp 10
 #$ -e log/
 #$ -o log/
 source ~/.bash_profile

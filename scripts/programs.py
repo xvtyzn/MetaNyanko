@@ -9,7 +9,8 @@ program_dict = {
 "bbmap": ["bbmap.sh", "in1=qc/clean1.fq", "in2=qc/clean2.fq", "out=mapping/mapped.sam", "threads=10"
             "ref=megahit/final.contigs.fa", "covstats=mapping/sample.stats\n",
             "samtools", "sort", "-@", "10", "mapping/mapped.sam", ">", "mapping/mapped.sort.bam"],
-"checkm": ["checkm", "lineage_wf", "-t", "30", "-x", "fasta", "output/", "checkm_output"],
+"checkm": ["source", "activate", "metanyanko\n",
+            "checkm", "lineage_wf", "-t", "30", "-x", "fasta", "output/", "checkm_output"],
 "metabat2": ["jgi_summarize_bam_contig_depths", "mapping/mapped.sort.bam", "--outputDepth", "mapping/depth.txt\n",
             "metabat2", "-i", "megahit/final.contigs.fa", "-a", "mapping/depth.txt", "-o", "metabat2/bins", "-t", "10"],
 "maxbin": ["cut", "-f", "1,2", "mapping/sample.stats", ">", "maxbin/myabund",

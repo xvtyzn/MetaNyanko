@@ -21,13 +21,15 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 5. subprocess
 
 ### Software dependency
-1. BBtools
-2. megahit
-3. metaphlan2
-4. maxbin
-5. metabat2
-6. checkm
-7. dfast
+1. BBtools (version > 38.22)
+2. megahit (v1.1.3)
+3. metaphlan2 (version 2.9.12)
+4. maxbin (version 2.2.6)
+5. metabat2 (version 2.12.1)
+6. checkm ()
+
+checkmとmetaphlan2についてはpython2.7依存のため、仮想環境を構築することを前提としました。
+もし仮想環境を構築しないのであれば`scripts/programs.py`から`conda activate metanyanko`を消去してください。
 
 ## Usage
 
@@ -46,18 +48,26 @@ optional arguments:
                         output directory
   -v VERSION, --version VERSION
                         Verstion
-  -qs QUALITYSCORE, --qualityscore QUALITYSCORE
-                        display a square of a given number
   -t THREAD, --thread THREAD
                         the number of threads in one jobscripts
   -m MEMORY, --memory MEMORY
                         the number of memory in one jobscripts
 ```
 
+inputフォーマットはqiime2のinput形式と同様です。以下の形式に従ってください。
+
+|sample-id|absolute-path|direction|description|
+|:--:|:---:|:---:|:---:|
+
 ## Install
 
 ```
-
+git clone https://github.com/xvtyzn/MetaNyanko.git
+conda install -c bioconda metabat2 maxbin bbtools
+conda create -n metanyanko python=2.7
+conda activate metanyanko
+conda install -c bioconda checkm-genome metaphlan2
+conda deactivate
 ```
 
 ## Contribution

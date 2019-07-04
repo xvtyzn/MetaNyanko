@@ -14,12 +14,12 @@ parser = argparse.ArgumentParser(prog='MetaNyanko.py',
             description='description',
             add_help=True)
 
-parser.add_argument("-i", "--input", help="input files table (tab-separated)")
-parser.add_argument("-o", "--output", help="output directory")
-parser.add_argument('-v', '--version',default="v0.0",type=str,help="Verstion")
-parser.add_argument("-qs" ,"--qualityscore", default=40,help="display a square of a given number", type=int)
-parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts", type=int)
-parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts", type=int)
+parser.add_argument("-i", "--input", help="input files table (tab-separated like qiime2 input table)")
+parser.add_argument("-o", "--output", help="output directory path")
+parser.add_argument('-v', '--version',default="v0.0",type=str,help="show this software verstion")
+parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts (default = 1)", type=int)
+parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
+parser.add_argument("-j" ,"--justcreate", default=0,help="(default = 0)", type=int)
 
 args = parser.parse_args()
 
@@ -34,9 +34,9 @@ def qsub_run(sample_list):
       pwd_dir = os.getcwd()
       os.chdir(sample)
 
-      command = ["sh", "metanyanko_sge.sh"]
-      res = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-      sys.stdout.buffer.write(res.stdout)
+      create_qsubshell = ["sh", "metanyanko_sge.sh"]
+      std_cqs = subprocess.run(create_qsubshell, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      sys.stdout.buffer.write(std_cqs.stdout)
 
       os.chdir(pwd_dir)
    return None
@@ -149,7 +149,11 @@ def main():
    make_jobscripts(programs.programs_list, programs.program_dict, args.thread,
                   args.memory, output_path, sampledata_table)
    make_shellscripts(sqsub.qsub_list, output_path)
-   qsub_run(output_path) #qsubのスクリプト実行
+
+   if args.justcreate == 0:
+      qsub_run(output_path) #qsubのスクリプト実行
+   else:
+      pass
 
 if __name__ == '__main__':
     main()
