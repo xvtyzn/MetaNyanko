@@ -10,7 +10,7 @@ program_dict = {
             "ref=megahit/final.contigs.fa", "covstats=mapping/sample.stats\n",
             "samtools", "sort", "-@", "10", "mapping/mapped.sam", ">", "mapping/mapped.sort.bam"],
 "checkm": ["source", "activate", "metanyanko\n",
-            "checkm", "lineage_wf", "-t", "30", "-x", "fasta", "output/", "checkm_output"],
+            "checkm", "lineage_wf", "-t", "30", "-x", "fa", "metabat2/", "checkm"],
 "metabat2": ["jgi_summarize_bam_contig_depths", "mapping/mapped.sort.bam", "--outputDepth", "mapping/depth.txt\n",
             "metabat2", "-i", "megahit/final.contigs.fa", "-a", "mapping/depth.txt", "-o", "metabat2/bins", "-t", "10"],
 "maxbin": ["cut", "-f", "1,2", "mapping/sample.stats", ">", "maxbin/myabund",

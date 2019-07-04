@@ -54,7 +54,7 @@ optional arguments:
                         the number of memory in one jobscripts
 ```
 
-inputフォーマットはqiime2のinput形式と同様です。以下の形式に従ってください。
+inputフォーマットはqiime2のinput形式と同様です。以下の形式のcsvに従ってください。
 
 |sample-id|absolute-path|direction|description|
 |:--:|:---:|:---:|:---:|
@@ -69,6 +69,13 @@ inputフォーマットはqiime2のinput形式と同様です。以下の形式�
 |NyanNyan5|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_005.fastq|forward|sample
 |NyanNyan5|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_005.fastq|reverse|sample
 
+また、出力するjobscriptはSGEまたはUGE対応です。TORQUEには対応していないので注意してください。
+
+現在、-tおよび-mオプションでthreads数およびmemory数の調節ができますが、これはjobscriptsのoption調節のみとなっています。
+そのため、各ソフトウェアのthreadsおよびmemoryは`scripts/programs.py`で調整を行ってください。
+
+jobの実行に関しては`scripts/shell_qsub.py`の内容に従っています。job実行の順番等の調節を行う場合には、内容の変更をしてください。
+
 ## Install
 
 ```
@@ -79,12 +86,11 @@ conda activate metanyanko
 conda install -c bioconda checkm-genome metaphlan2
 conda deactivate
 ```
-
-## Contribution
-
-## Licence
-
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+また、checkmにはデータベースが必要となるため、
+```
+checkm data setRoot
+```
+の実行を行ってください。
 
 ## Author
 
