@@ -58,6 +58,16 @@ inputフォーマットはqiime2のinput形式と同様です。以下の形式�
 
 |sample-id|absolute-path|direction|description|
 |:--:|:---:|:---:|:---:|
+|NyanNyan|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_001.fastq|forward|sample
+|NyanNyan|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_001.fastq|reverse|sample
+|NyanNyan2|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_002.fastq|forward|sample
+|NyanNyan2|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_002.fastq|reverse|sample
+|NyanNyan3|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_003.fastq|forward|sample
+|NyanNyan3|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_003.fastq|reverse|sample
+|NyanNyan4|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_004.fastq|forward|sample
+|NyanNyan4|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_004.fastq|reverse|sample
+|NyanNyan5|/home/ide/bitbiome/example/out/190624A_S1_L001_R1_001.part_005.fastq|forward|sample
+|NyanNyan5|/home/ide/bitbiome/example/out/190624A_S1_L001_R2_001.part_005.fastq|reverse|sample
 
 ## Install
 
