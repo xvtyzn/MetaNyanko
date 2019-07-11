@@ -16,13 +16,16 @@ parser = argparse.ArgumentParser(prog='MetaNyanko.py',
 
 parser.add_argument("-i", "--input", help="input files table (tab-separated like qiime2 input table)")
 parser.add_argument("-o", "--output", help="output directory path")
-parser.add_argument('-v', '--version',default="v0.0",type=str,help="show this software verstion")
+parser.add_argument("-v", '--version',default="v0.0",type=str,help="show this software verstion")
 parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts (default = 1)", type=int)
 parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
 parser.add_argument("-ct" ,"--clustertype", default="UGE",help="supercomputer type (UGE or SGE)", choices = ["UGE", "SGE"])
-parser.add_argument("-j" ,"--justcreate", default=0, help="(default = 0)", choices = [0, 1], type=int)
+parser.add_argument("-j" ,"--justcreate", default=0, help="(default = 0)", choices = [0, 1], type=int)   #TRUE or FLASEの指定にした方が良い
 
 args = parser.parse_args()
+
+#pythonはシングルクォートがデフォルト
+
 
 #################
 # qsub 実行のための関数
@@ -54,13 +57,11 @@ def make_outputdir(output_dir, input_table, dir_list):
    output_root = output_dir
 
    assert os.path.exists(output_root) == False, '出力ディレクトリを変更してください'
-   if os.path.exists(output_root) == False:
+   if !os.path.exists(output_root):
       os.mkdir(output_root)
-   else:
-      pass
 
    input_data = pd.read_csv(input_table)
-   output_directory = input_data['sample-id']
+   output_directory = input_data["sample-id"]
    out_dir = set(output_directory.values.tolist())
 
    #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'

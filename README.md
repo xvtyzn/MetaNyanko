@@ -12,7 +12,7 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 
 ## Requirement
 ### python package dependency
-このパイプラインは以下のソフトウェアに依存しています。
+このパイプラインはpython3.6に依存しています。
 
 1. sys
 2. os
@@ -92,13 +92,17 @@ Outputは/指定したディレクトリ/sample-id下に出力されます。
 |log|各jobスクリプトのlogを出力|
 
 ## Install
+miniconda3またはanaconda3を用いて、環境構築を行います。
 
 ```
 git clone https://github.com/xvtyzn/MetaNyanko.git
-conda install -c bioconda metabat2 maxbin bbtools
+conda install -c bioconda metabat2 maxbin2 bbmap megahit samtools
+conda install pandas
 conda create -n metanyanko python=2.7
 conda activate metanyanko
-conda install -c bioconda checkm-genome metaphlan2
+conda install -c bioconda checkm-genome metaphlan2 #checkmおよびmetaphlan2はpy2依存のため
+metaphlan2.py #実行初回はデータベースインストールのため、パイプライン実行前に実行しておくこと
+checkm data setRoot #同様にデータベース指定のために実行すること
 conda deactivate
 ```
 また、checkmにはデータベースが必要となるため、
