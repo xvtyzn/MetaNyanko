@@ -8,7 +8,7 @@ import subprocess
 
 import scripts.programs as programs
 import scripts.shell_qsub as sqsub
-#import scripts.version as version
+import scripts.version
 
 parser = argparse.ArgumentParser(prog='MetaNyanko.py',
             usage='MetaNyanko.py -i input_table.tsv -o output_directory',
