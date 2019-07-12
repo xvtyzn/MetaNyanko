@@ -8,6 +8,7 @@ import subprocess
 
 import scripts.programs as programs
 import scripts.shell_qsub as sqsub
+#import scripts.version as version
 
 parser = argparse.ArgumentParser(prog='MetaNyanko.py',
             usage='MetaNyanko.py -i input_table.tsv -o output_directory',
@@ -21,6 +22,7 @@ parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in 
 parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
 parser.add_argument("-ct" ,"--clustertype", default="UGE",help="supercomputer type (UGE or SGE)", choices = ["UGE", "SGE"])
 parser.add_argument("-j" ,"--justcreate", default=0, help="(default = 0)", choices = [0, 1], type=int)   #TRUE or FLASEの指定にした方が良い
+#option指定でプログラムファイルを与えるとその中のプログラムを実行してくれるような形になっているとなおよし。
 
 args = parser.parse_args()
 
@@ -90,6 +92,8 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
    elif st == "SGE":
       threads_option = "#$ -pe smp " + threads_str
 
+
+# format関数
    memory_option = "#$ -l s_vmem=" + memory_str  +  "G -l mem_req=" + memory_str  + "G"
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
@@ -149,6 +153,8 @@ def main():
    #megahitは出力時に作成するため意図的に除いています
    dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
                "metaphlan2", "checkm", "dfast", "maxbin"]
+
+   #シンボリックシンクを貼ってしまうというのが良いのかもしれない
 
    out1 = make_outputdir(args.output, args.input, dir_list)
    output_path = out1[0]
