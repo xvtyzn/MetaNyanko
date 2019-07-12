@@ -17,11 +17,11 @@ parser = argparse.ArgumentParser(prog='MetaNyanko.py',
 
 parser.add_argument('-i', '--input', help='input files table (tab-separated like qiime2 input table)')
 parser.add_argument('-o', '--output', help='output directory path')
-parser.add_argument("-v", '--version',default="v0.0",type=str,help="show this software verstion")
-parser.add_argument("-t" ,"--thread", default=1, help="the number of threads in one jobscripts (default = 1)", type=int)
-parser.add_argument("-m" ,"--memory", default=4,help="the number of memory in one jobscripts (default = 4) ", type=int)
-parser.add_argument("-ct" ,"--clustertype", default="UGE",help="supercomputer type (UGE or SGE)", choices = ["UGE", "SGE"])
-parser.add_argument("-j" ,"--justcreate", default=0, help="(default = TRUE)", type=bool)   #TRUE or FLASEの指定にした方が良い
+parser.add_argument('-v', '--version',default='v0.0',type=str,help='show this software verstion')
+parser.add_argument('-t', '--thread', default=1, help='the number of threads in one jobscripts (default = 1)', type=int)
+parser.add_argument('-m', '--memory', default=4,help='the number of memory in one jobscripts (default = 4)', type=int)
+parser.add_argument('-ct', '--clustertype', default='UGE',help='supercomputer type (UGE or SGE)', choices = ['UGE', 'SGE'])
+parser.add_argument('-j', '--justcreate', default=0, help='(default = TRUE)', type=bool)   #TRUE or FLASEの指定にした方が良い
 #option指定でプログラムファイルを与えるとその中のプログラムを実行してくれるような形になっているとなおよし。
 
 args = parser.parse_args()
@@ -40,7 +40,7 @@ def qsub_run(sample_list):
       pwd_dir = os.getcwd()
       os.chdir(sample)
 
-      create_qsubshell = ["sh", "metanyanko_sge.sh"]
+      create_qsubshell = ['sh', 'metanyanko_sge.sh']
       std_cqs = subprocess.run(create_qsubshell, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
       sys.stdout.buffer.write(std_cqs.stdout)
 
