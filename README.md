@@ -9,6 +9,10 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 3. Compositional analysis (metaphlan2)
 4. Binning (maxbin, metabat2, BBtools)
 5. Quality check (checkm)
+6. Genome annotation (in development)
+7. Antibiotic resistance genes search (in development) 
+8. Phylogenetic tree construction (in development)
+
 
 ## Requirement
 ### python package dependency
@@ -97,6 +101,7 @@ miniconda3またはanaconda3を用いて、環境構築を行います。
 ```
 git clone https://github.com/xvtyzn/MetaNyanko.git
 conda install -c bioconda metabat2 maxbin2 bbmap megahit samtools
+conda install -c bioconda abricate
 conda install pandas
 conda create -n metanyanko python=2.7
 conda activate metanyanko
