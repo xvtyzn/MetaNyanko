@@ -8,7 +8,6 @@ import subprocess
 
 import scripts.programs as programs
 import scripts.shell_qsub as sqsub
-import scripts.version
 
 parser = argparse.ArgumentParser(prog='MetaNyanko.py',
             usage='MetaNyanko.py -i input_table.tsv -o output_directory',
@@ -56,7 +55,7 @@ def qsub_run(sample_list):
 def make_outputdir(output_dir, input_table, dir_list):
    output_root = output_dir
 
-   assert os.path.exists(output_root) == True, '出力ディレクトリを変更してください'
+   assert os.path.exists(output_root) == True, 'Change the output directory'
    if os.path.exists(output_root) == False:
       os.mkdir(output_root)
 
