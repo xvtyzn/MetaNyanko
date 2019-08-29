@@ -10,7 +10,7 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 4. Binning (maxbin, metabat2, BBtools)
 5. Quality check (checkm)
 6. Genome annotation (in development)
-7. Antibiotic resistance genes search (in development) 
+7. Antibiotic resistance genes search (in development)
 8. Phylogenetic tree construction (in development)
 
 
@@ -39,7 +39,7 @@ checkmとmetaphlan2についてはpython2.7依存のため、仮想環境を構�
 ### Input
 ```
 [MetaNyanko]python MetaNyanko.py -h                                                                                    11:06:03  ☁ master ☂⚡✭
-usage: MetaNyanko.py -i input_table.tsv -o output_directory
+usage: MetaNyanko.py -i input_table.csv -o output_directory
 
 description
 
@@ -47,7 +47,7 @@ optional arguments:
 
   -h, --help            show this help message and exit
   -i INPUT, --input INPUT
-                        input files table (tab-separated)
+                        input files table (camma-separated)
   -o OUTPUT, --output OUTPUT
                         output directory
   -v VERSION, --version VERSION
