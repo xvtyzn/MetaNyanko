@@ -21,19 +21,17 @@ parser.add_argument('-v', '--version',default='v0.0',type=str,help='show this so
 parser.add_argument('-t', '--thread', default=1, help='the number of threads in one jobscripts (default = 1)', type=int)
 parser.add_argument('-m', '--memory', default=4,help='the number of memory in one jobscripts (default = 4)', type=int)
 parser.add_argument('-ct', '--clustertype', default='UGE',help='supercomputer type (UGE or SGE)', choices = ['UGE', 'SGE'])
-parser.add_argument('-j', '--justcreate', default=0, help='(default = TRUE)', type=bool)   #TRUE or FLASEの指定にした方が良い
-#option指定でプログラムファイルを与えるとその中のプログラムを実行してくれるような形になっているとなおよし。
+parser.add_argument('-j', '--justcreate', default=0, help='(default = TRUE)', type=bool)   #Should be set to TRUE or FLASE
+#If you give it a program file with option, it will run that program.
 
 args = parser.parse_args()
 
-#pythonはシングルクォートがデフォルト
-
 
 #################
-# qsub 実行のための関数
+# qsub function for execution
 #################
-# directory_list: 各directoryの情報が入ったリスト
-# 出力: bash上でのqsub実行ファイルの実行
+# directory_list: list containing information about each directory
+# Output: Running the qsub executable on bash
 
 def qsub_run(sample_list):
    for sample in sample_list:
@@ -48,25 +46,25 @@ def qsub_run(sample_list):
    return None
 
 #################
-# Output directoryの作成
+# Create Output directory
 #################
-# output_dir: outputで指定したdirectory
-# input_table: inputで指定したcsvのpath
-# dir_list: output directory下に作成するdirectoryリスト
-# 出力: output_dirに各directoryを付与したpath, input_tableのpandas object
+# output_dir: directory specified by output
+# input_table: path of csv specified in input
+# dir_list: Directory list to be created under output directory
+# Output: pandas object in path, input _ table with each directory added to output_dir
 
 def make_outputdir(output_dir, input_table, dir_list):
    output_root = output_dir
 
-   assert os.path.exists(output_root) == False, '出力ディレクトリを変更してください'
-   if !os.path.exists(output_root):
+   assert os.path.exists(output_root) == True, '出力ディレクトリを変更してください'
+   if os.path.exists(output_root) == False:
       os.mkdir(output_root)
 
    input_data = pd.read_csv(input_table)
-   output_directory = input_data["sample-id"]
+   output_directory = input_data['sample-id']
    out_dir = set(output_directory.values.tolist())
 
-   #assert "defaultsample" in out_dir, 'sample-idを変更してください。defaultsampleは許されません'
+   #assert "defaultsample" in out_dir, 'Change the sample-id. defaultsample not allowed'
 
    abpath_out =  list(map(lambda x: os.path.join(output_root,x), out_dir))
 
@@ -78,7 +76,7 @@ def make_outputdir(output_dir, input_table, dir_list):
    return abpath_out, input_data
 
 #################
-# qsub用のスクリプトの作成
+# Creating Scripts for qsub
 #################
 
 def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, data_table, st):
@@ -93,7 +91,7 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
       threads_option = "#$ -pe smp {}".format(threads_str)
 
 
-# format関数
+# format
    memory_option = "#$ -l s_vmem={1}G -l mem_req={2}G".format(memory_str ,memory_str)
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
@@ -113,8 +111,8 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
             sample_mat = data_table[data_table['sample-id'] == samplename]
             sample_mat = sample_mat['absolute-path'].values.tolist()
 
-            run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])  #R1デフォルトがA.fq
-            run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])  #R2デフォルトがB.fq
+            run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])
+            run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])
 
             program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" + \
                         slog_option + "\n" + "source ~/.bash_profile" + "\n" + \
@@ -130,7 +128,7 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
    return None
 
 #################
-# qsub実行用のスクリプト作成
+# Scripting for running qsub
 #################
 
 def make_shellscripts(run_list, dir_list):
@@ -150,11 +148,11 @@ def make_shellscripts(run_list, dir_list):
    return None
 
 def main():
-   #megahitは出力時に作成するため意図的に除いています
+   # megahit is intentionally omitted because it is created on output
    dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
                "metaphlan2", "checkm", "dfast", "maxbin"]
 
-   #シンボリックシンクを貼ってしまうというのが良いのかもしれない
+   # It might be a good idea to stick a symbolic sink.
 
    out1 = make_outputdir(args.output, args.input, dir_list)
    output_path = out1[0]
@@ -165,7 +163,7 @@ def main():
    make_shellscripts(sqsub.qsub_list, output_path)
 
    if args.justcreate == 0:
-      qsub_run(output_path) #qsubのスクリプト実行
+      qsub_run(output_path) #script execution of qsub
    elif args.justcreate == 1:
       pass
 
