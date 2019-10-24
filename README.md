@@ -31,6 +31,7 @@ MetaNyanko: Shotgun metagenomic analysis pipeline for SGE (In paticular, Shiroka
 4. maxbin (version 2.2.6)
 5. metabat2 (version 2.12.1)
 6. checkm ()
+7. VirFinder (version 1.1)
 
 checkmとmetaphlan2についてはpython2.7依存のため、仮想環境を構築することを前提としました。
 もし仮想環境を構築しないのであれば`scripts/programs.py`から`conda activate metanyanko`を消去してください。
@@ -91,8 +92,10 @@ Outputは/指定したディレクトリ/sample-id下に出力されます。
 |mapping|BBmapによるmapping結果|
 |maxbin|maxbinののbinning結果|
 |metabat2|metabat2のbinning結果|
-|metaphlan2|metaphlan2の結果 (all.txt)|
+|metaphlan2|metaphlan2の結果 (系統組成, all.txt)|
+|humann2|humann2の結果(機能組成, )|
 |checkm|checkmの経過ファイル|
+|virFinder|VirFinderによるウイルス様配列の判定結果||
 |log|各jobスクリプトのlogを出力|
 
 ## Install
@@ -105,9 +108,13 @@ conda install -c bioconda abricate
 conda install pandas
 conda create -n metanyanko python=2.7
 conda activate metanyanko
-conda install -c bioconda checkm-genome metaphlan2 #checkmおよびmetaphlan2はpy2依存のため
+conda install -c bioconda checkm-genome metaphlan2 humann2 #checkm, humann2およびmetaphlan2はpy2依存のため
 metaphlan2.py #実行初回はデータベースインストールのため、パイプライン実行前に実行しておくこと
+humann2_test #実行前に環境構築されているかのテスト
+humann2_databases --download chocophlan full ~/Database/humann2 #データベースのインストール
+humann2_databases --download uniref uniref90_diamond ~/Database/humann2 #より詳細なデータベースのインストール
 checkm data setRoot #同様にデータベース指定のために実行すること
+conda install -c bioconda r-virfinder ＃VirFinderのinstall
 conda deactivate
 ```
 また、checkmにはデータベースが必要となるため、
@@ -115,6 +122,20 @@ conda deactivate
 checkm data setRoot
 ```
 の実行を行ってください。
+virFinderのためには別の環境を用意する必要があります。
+
+```
+conda create -n virFinder python=3.6 anaconda
+conda activate virFinder
+conda install -c bioconda r-virfinder
+conda deactivate
+```
+
+plasflowの環境構築については、以下のコマンドに従ってください。
+
+```
+
+```
 
 ## Author
 

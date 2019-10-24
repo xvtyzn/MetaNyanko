@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(prog='MetaNyanko.py',
 parser.add_argument('-i', '--input', help='input files table (tab-separated like qiime2 input table)')
 parser.add_argument('-o', '--output', help='output directory path')
 parser.add_argument('-v', '--version',default='v0.0',type=str,help='show this software verstion')
-parser.add_argument('-t', '--thread', default=1, help='the number of threads in one jobscripts (default = 1)', type=int)
+parser.add_argument('-t', '--thread', default=10, help='the number of threads in one jobscripts (default = 10)', type=int)
 parser.add_argument('-m', '--memory', default=4,help='the number of memory in one jobscripts (default = 4)', type=int)
 parser.add_argument('-ct', '--clustertype', default='UGE',help='supercomputer type (UGE or SGE)', choices = ['UGE', 'SGE'])
 parser.add_argument('-j', '--justcreate', default=0, help='(default = TRUE)', type=bool)   #Should be set to TRUE or FLASE
@@ -55,7 +55,7 @@ def qsub_run(sample_list):
 def make_outputdir(output_dir, input_table, dir_list):
    output_root = output_dir
 
-   assert os.path.exists(output_root) == True, 'Change the output directory'
+   assert not os.path.exists(output_root), 'Change the output directory'
    if os.path.exists(output_root) == False:
       os.mkdir(output_root)
 
@@ -91,7 +91,7 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
 
 
 # format
-   memory_option = "#$ -l s_vmem={1}G -l mem_req={2}G".format(memory_str ,memory_str)
+   memory_option = "#$ -l s_vmem={0}G -l mem_req={1}G".format(memory_str ,memory_str)
    UGE_options = ["#!/bin/sh", "#$ -S /bin/sh", "#$ -cwd", memory_option, threads_option]
 
    for program in plist:
@@ -112,12 +112,13 @@ def make_jobscripts(programs_list, programs_dict, threads, memory, dir_list, dat
 
             run_commnad_str = run_commnad_str.replace('A.fq', sample_mat[0])
             run_commnad_str = run_commnad_str.replace('B.fq', sample_mat[1])
+            UGE_option_str = "\n".join(UGE_options)
 
-            program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" + \
+            program_all = UGE_option_str + "\n" + elog_option + "\n" + \
                         slog_option + "\n" + "source ~/.bash_profile" + "\n" + \
                         run_commnad_str
          else:
-            program_all = "\n".join(UGE_options) + "\n" + elog_option + "\n" + \
+            program_all = UGE_option_str + "\n" + elog_option + "\n" + \
                         slog_option + "\n" + "source ~/.bash_profile" + "\n" + \
                         run_commnad_str
 
@@ -149,7 +150,8 @@ def make_shellscripts(run_list, dir_list):
 def main():
    # megahit is intentionally omitted because it is created on output
    dir_list = ["rawdata", "qc", "log", "metabat2", "mapping",
-               "metaphlan2", "checkm", "dfast", "maxbin"]
+               "metaphlan2", "checkm", "dfast", "maxbin",
+               "plasflow", "virFinder"]
 
    # It might be a good idea to stick a symbolic sink.
 
