@@ -1,5 +1,5 @@
 programs_list = ["bbduk", "bbmap", "bbmerge", "megahit", "metaphlan2", "humann2",
-"checkm", "metabat2", "maxbin", "virfinder", "plasflow"]
+"checkm", "metabat2", "maxbin", "virsorter", "plasflow"]
 
 program_dict = {
 "bbduk": ["bbduk.sh", "in1=A.fq", "in2=B.fq", "out1=qc/clean1.fq", "out2=qc/clean2.fq",
@@ -23,6 +23,7 @@ program_dict = {
             "humann2", "--input", "qc/merged.fq", "--output", "humann2", "--threads", "10"],
 "virfinder": ["conda", "activate", "virFinder\n",
             "Rscripts virFinder.R"],
+"virsorter": ["wrapper_phage_contigs_sorter_iPlant.pl", "-f", "megahit/final.contigs.fa", "--diamond", "--ncpu", "10"],
 "plasflow": ["conda", "activate", "plasflow\n",
             "PlasFlow.py --input megahit/final.contigs.fa --output plasflow/final.contigs.fa.tsv --threshold 0.7"]
 }

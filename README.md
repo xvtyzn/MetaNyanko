@@ -95,6 +95,7 @@ Outputは/指定したディレクトリ/sample-id下に出力されます。
 |metaphlan2|metaphlan2の結果 (系統組成, all.txt)|
 |humann2|humann2の結果(機能組成, )|
 |checkm|checkmの経過ファイル|
+|virsorter|Virsorterによるウイルス様配列の判定結果||
 |virFinder|VirFinderによるウイルス様配列の判定結果||
 |log|各jobスクリプトのlogを出力|
 
@@ -104,7 +105,7 @@ miniconda3またはanaconda3を用いて、環境構築を行います。
 ```
 git clone https://github.com/xvtyzn/MetaNyanko.git
 conda install -c bioconda metabat2 maxbin2 bbmap megahit samtools
-conda install -c bioconda abricate
+conda install -c bioconda abricate virsorter
 conda install pandas
 conda create -n metanyanko python=2.7
 conda activate metanyanko

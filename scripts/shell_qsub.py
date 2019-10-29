@@ -8,7 +8,8 @@ metaphlan2 = ["qsub", "-hold_jid", "merge_defaultsample", "-N", "metaphlan2_defa
 humann2 = ["qsub", "-hold_jid", "merge_defaultsample", "-N", "humann2_defaultsample", "shellpath/humann2.sh"]
 checkm = ["qsub", "-hold_jid", "binning_defaultsample", "-N", "checkm_defaultsample", "shellpath/checkm.sh"]
 virfinder = ["qsub", "-hold_jid", "binning_defaultsample", "-N", "virFinder_defaultsample", "shellpath/virfinder.sh"]
+virsorter = ["qsub", "-hold_jid", "binning_defaultsample", "-N", "virsorter_defaultsample", "shellpath/virsorter.sh"]
 plasflow = ["qsub", "-hold_jid", "binning_defaultsample", "-N", "plasflow_defaultsample", "shellpath/plasflow.sh"]
 test = ["echo", "$PWD"]
 
-qsub_list = [qc, merge, assembly, mapping, maxbin, metabat2, virfinder, plasflow, metaphlan2, humann2, checkm, test]
+qsub_list = [qc, merge, assembly, mapping, maxbin, metabat2, virsorter, plasflow, metaphlan2, humann2, checkm, test]
