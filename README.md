@@ -134,7 +134,11 @@ conda deactivate
 plasflowの環境構築については、以下のコマンドに従ってください。
 
 ```
-
+conda create --name plasflow python=3.5
+conda activate plasflow
+conda install -c jjhelmus tensorflow=0.10.0rc0
+conda install plasflow -c smaegol
+conda deactivate
 ```
 
 ## Author
